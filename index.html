@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SnapSend</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body>
+  <main class="container">
+    <div class="primary-column">
+      <header class="header">
+        <h1>SnapSend</h1>
+        <p>快速发现同一网络中的设备，进行文件传输、剪贴板同步与即时消息交流。</p>
+      </header>
+
+      <section class="card self">
+        <h2>本机信息</h2>
+        <div class="self-meta">
+          <span>当前名称：</span>
+          <strong id="currentDisplayName">加载中...</strong>
+        </div>
+        <div class="self-meta">
+          <span>设备 ID：</span>
+          <code id="selfId">未知</code>
+        </div>
+        <details class="self-settings">
+          <summary>修改设备昵称</summary>
+          <div class="self-controls">
+            <label for="displayName">新的昵称</label>
+            <input id="displayName" type="text" maxlength="80" placeholder="我的笔记本" />
+            <button id="saveDisplayName">保存</button>
+          </div>
+        </details>
+      </section>
+
+      <section class="card peers">
+        <h2>可用设备</h2>
+        <ul id="peerList" aria-live="polite"></ul>
+      </section>
+
+      <section class="card transfer">
+        <h2>文件传输</h2>
+        <div class="form-row">
+          <label for="fileTarget">发送到</label>
+          <select id="fileTarget">
+            <option value="">选择目标设备</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="fileInput">选择文件</label>
+          <input id="fileInput" type="file" title="选择要发送的文件" />
+          <button id="sendFileBtn">发送文件</button>
+        </div>
+        <details id="fileStatusPanel" class="status-panel">
+          <summary>传输日志</summary>
+          <div id="fileStatus" class="status-log" role="log" aria-live="polite" data-activity-label="文件传输"></div>
+        </details>
+      </section>
+
+      <section class="card clipboard">
+        <h2>剪贴板同步</h2>
+        <textarea id="clipboardText" rows="4" placeholder="在此输入或粘贴要分享的内容..."></textarea>
+        <div class="form-row">
+          <label for="clipboardTarget">发送到</label>
+          <select id="clipboardTarget">
+            <option value="">所有设备</option>
+          </select>
+        </div>
+        <div class="clipboard-actions">
+          <button id="pushClipboardBtn">推送剪贴板</button>
+          <button id="readAndBroadcastClipboardBtn">读取并广播</button>
+          <button id="copyClipboardBtn">复制到剪贴板</button>
+        </div>
+        <details id="clipboardStatusPanel" class="status-panel">
+          <summary>剪贴板日志</summary>
+          <div id="clipboardStatus" class="status-log" role="log" aria-live="polite" data-activity-label="剪贴板"></div>
+        </details>
+      </section>
+
+      <section class="card chat">
+        <h2>即时消息</h2>
+        <div id="messages" class="messages" aria-live="polite"></div>
+        <form id="chatForm" autocomplete="off">
+          <div class="form-row">
+            <label for="chatTarget">发送到</label>
+            <select id="chatTarget">
+              <option value="">所有设备</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <input id="chatInput" type="text" placeholder="输入消息..." required />
+            <button type="submit">发送</button>
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <aside class="activity-panel">
+      <h2>实时总览</h2>
+      <div class="status-overview">
+        <div class="status-block">
+          <span class="status-label">服务器连接</span>
+          <strong id="statusServer">初始化中...</strong>
+        </div>
+      </div>
+      <div id="activityLog" class="activity-log" role="log" aria-live="polite"></div>
+    </aside>
+  </main>
+
+  <template id="peerTemplate">
+    <li class="peer-item">
+      <div class="peer-main">
+        <strong class="peer-name"></strong>
+        <code class="peer-id"></code>
+      </div>
+      <div class="peer-actions">
+        <button class="start-connection">拍一拍</button>
+      </div>
+    </li>
+  </template>
+
+  <div id="clipboardOverlay" class="clipboard-overlay" hidden>
+    <div class="clipboard-overlay__backdrop" aria-hidden="true"></div>
+    <div class="clipboard-overlay__dialog" role="dialog" aria-modal="true" aria-labelledby="clipboardOverlayTitle">
+      <h3 id="clipboardOverlayTitle">粘贴剪贴板内容</h3>
+      <p id="clipboardOverlayMessage">请在下方区域按 Ctrl+V / ⌘V 粘贴要分享的内容。</p>
+      <div id="clipboardOverlayArea" class="clipboard-overlay__area" contenteditable="true" aria-label="剪贴板粘贴区域"></div>
+      <div id="clipboardOverlayPreview" class="clipboard-overlay__preview" aria-live="polite"></div>
+      <div class="clipboard-overlay__actions">
+        <button id="clipboardOverlayCancel" type="button">取消</button>
+        <button id="clipboardOverlayConfirm" type="button" class="primary">确定</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./app.js"></script>
+</body>
+
+</html>
