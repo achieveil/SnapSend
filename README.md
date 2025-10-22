@@ -31,7 +31,23 @@
   ```
 - 默认会在后台定期心跳检测， 60 秒未响应的客户端会被自动清理。
 
+## 设置开机自启
 
+通过 [PM2](https://pm2.keymetrics.io/) 可以把 SnapSend 作为后台服务，并随系统启动自动运行。
+- **使用 PM2 启动服务**：
+  `
+  pm2 start node --name SnapSend -- index.js
+  `
+  
+
+- **设置系统自启**
+  1. 运行 
+  `pm2 startup`，
+  按照提示执行生成的命令（不同系统会输出不同指令，如 macOS 会输出 sudo launchctl ...，Linux 会输出 sudo systemctl ...）。
+  2. 执行 `pm2 save` 保存当前进程列表，自启时会自动恢复。
+- **取消开机自启**
+  1. 删除进程：`pm2 delete SnapSend`
+  2. 取消系统服务：`pm2 unstartup`
 
 ##  使用指南
 
