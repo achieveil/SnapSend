@@ -89,7 +89,10 @@ const generateUniqueDisplayName = () => {
 };
 
 const app = express();
-const serveStatic = (fileName) => path.resolve(__dirname, fileName);
+const clientDir = path.resolve(__dirname, 'client');
+const serveStatic = (fileName) => path.join(clientDir, fileName);
+
+app.use(express.static(clientDir));
 
 app.get('/', (req, res) => {
   res.sendFile(serveStatic('index.html'));
