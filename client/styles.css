@@ -661,3 +661,48 @@ textarea {
     width: 100%;
   }
 }
+
+/* 小屏（手机）专用：避免 .form-row 横向溢出，文件选择等控件撑满容器 */
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .form-row label {
+    margin-bottom: 0.15rem;
+    width: 100%;
+  }
+
+  /* 让表单控件在小屏时撑满容器并在 box-sizing 下正确计算内边距 */
+  .form-row input,
+  .form-row select,
+  .form-row textarea,
+  .form-row button {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* file input 特别处理：文件按钮与文本区都按行排列，避免按钮外溢 */
+  .form-row input[type="file"] {
+    padding: 0.4rem 0.6rem;
+    width: 100%;
+  }
+
+  .form-row input[type="file"]::file-selector-button,
+  .form-row input[type="file"]::-webkit-file-upload-button {
+    margin-right: 0;
+    padding: 0.45rem 0.85rem;
+    display: inline-block;
+  }
+
+  /* 确保 activity-panel、cards 等不横向溢出 */
+  .container,
+  .card,
+  .activity-panel {
+    width: 100%;
+    overflow: visible;
+  }
+}
