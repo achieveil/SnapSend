@@ -123,15 +123,13 @@
 
 ```text
 SnapSend/
-├── index.html      # 浏览器端 UI 入口
-├── styles.css      # 界面样式与布局
-├── app.js          # 前端逻辑：状态管理、WebRTC、UI 交互
-├── index.js        # Node.js 信令 & 静态资源服务器
-├── package.json    # 项目元数据与 npm 脚本
-├── docs/           # 项目说明文档资源
-└── README.md       # 项目说明文档
+├── index.js          # 后端服务
+├── package.json      # 项目配置与依赖
+└── client/          
+   ├── app.js       # 前端业务逻辑
+   ├── index.html   # 前端页面
+   └── styles.css   # 样式表
 ```
-
 ##  功能亮点
 
 ### 所有的功能都是本地实现的
