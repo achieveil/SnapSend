@@ -44,11 +44,12 @@
   1. 运行 
   `pm2 startup`，
   按照提示执行生成的命令（不同系统会输出不同指令，如 macOS 会输出 sudo launchctl ...，Linux 会输出 sudo systemctl ...）。
+  - >在 Windows 上推荐先执行 `npm install pm2-windows-startup -g` 然后运行 `pm2-startup install` 完成自启注册。
   2. 执行 `pm2 save` 保存当前进程列表，自启时会自动恢复。
 - **取消开机自启**
   1. 删除进程：`pm2 delete SnapSend`
   2. 取消系统服务：`pm2 unstartup`
-
+   - >在 Windows 执行 `pm2-startup uninstall` 删除在启动时启动进程的注册表项。
 ##  使用指南
 
 - **修改设备昵称**：在左侧「本机信息」中填写新昵称并保存，昵称会缓存到 `localStorage`，下次打开自动恢复。
